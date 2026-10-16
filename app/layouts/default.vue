@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { loggedIn, user, clear } = useUserSession();
+</script>
+
 <template>
   <div class="min-h-screen bg-stone-50 text-stone-900">
     <header class="border-b border-stone-200 bg-white">
@@ -12,7 +16,36 @@
           >
             Browse
           </NuxtLink>
-          <!-- Auth links will go here -->
+          <template v-if="loggedIn">
+            <NuxtLink
+              to="/favorites"
+              class="text-sm font-medium text-stone-600 hover:text-stone-900"
+            >
+              Favorites
+            </NuxtLink>
+            <NuxtLink
+              to="/visited"
+              class="text-sm font-medium text-stone-600 hover:text-stone-900"
+            >
+              Visited
+            </NuxtLink>
+            <div class="flex items-center gap-3">
+              <span class="text-sm text-stone-500">{{ user?.login }}</span>
+              <button
+                @click="clear"
+                class="text-sm font-medium text-stone-600 hover:text-stone-900"
+              >
+                Log out
+              </button>
+            </div>
+          </template>
+          <NuxtLink
+            v-else
+            to="/login"
+            class="text-sm font-medium text-stone-600 hover:text-stone-900"
+          >
+            Log in
+          </NuxtLink>
         </div>
       </nav>
     </header>
